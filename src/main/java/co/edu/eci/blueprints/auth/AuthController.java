@@ -2,6 +2,11 @@ package co.edu.eci.blueprints.auth;
 
 import co.edu.eci.blueprints.security.InMemoryUserService;
 import co.edu.eci.blueprints.security.RsaKeyProperties;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
+@Tag(name = "Autenticación", description = "Endpoint didáctico para obtener un token JWT Bearer (RS256)")
 public class AuthController {
 
     private final JwtEncoder encoder;
@@ -26,6 +32,16 @@ public class AuthController {
     public record LoginRequest(String username, String password) {}
     public record TokenResponse(String access_token, String token_type, long expires_in) {}
 
+    @Operation(
+        summary = "Login — emite token JWT",
+        description = "Valida las credenciales y retorna un Bearer token firmado con RS256. " +
+                      "Usuarios disponibles: student / student123"
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Token emitido correctamente"),
+        @ApiResponse(responseCode = "401", description = "Credenciales inválidas")
+    })
+    @SecurityRequirements   // este endpoint es público, no requiere token
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest req) {
         if (!userService.isValid(req.username(), req.password())) {
