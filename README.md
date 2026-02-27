@@ -258,7 +258,7 @@ src/main/resources/
    1. Abrir `http://localhost:8080/swagger-ui/index.html`.
    2. En la sección *Autenticación*, ejecutar `POST /auth/login` con `student / student123`.
    3. Copiar el `access_token` de la respuesta.
-   4. Pulsar **Authorize** (🔒) en la parte superior y pegar el token.
+   4. Pulsar **Authorize**  en la parte superior y pegar el token.
    5. Ejecutar cualquier endpoint de la sección *Blueprints* — Swagger enviará el `Authorization: Bearer ...` automáticamente.
 
 ---
