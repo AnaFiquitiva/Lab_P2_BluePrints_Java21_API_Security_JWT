@@ -14,3 +14,10 @@ blueprints:
   security:
     issuer: "https://decsis-eci/blueprints"
     token-ttl-seconds: 60   # Cambiado de 3600 a 60 s para observar el efecto de expiración rápida
+
+# ========== CONFIGURACIÓN DE SEGURIDAD ==========
+app:
+  cors:
+    # En desarrollo: localhost:5173
+    # En producción: cambiar a dominio real (p. ej., https://app.example.com)
+    allowed-origins: "http://localhost:5173,http://localhost:3000"
