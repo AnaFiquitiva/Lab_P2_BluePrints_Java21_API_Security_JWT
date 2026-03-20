@@ -30,11 +30,14 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
+        // Parsear orígenes permitidos desde config
+        String[] origins = allowedOrigins.split(",");
+        for (int i = 0; i < origins.length; i++) {
+            origins[i] = origins[i].trim();
+        }
+        
         registry.addEndpoint("/ws-blueprints")
-                // Permitir solo orígenes específicos (whitelist)
-                .setAllowedOrigins(allowedOrigins.split(","))
-                // Si se necesita soporte retro para navegadores antiguos:
-                // .withSockJS();
+                .setAllowedOrigins(origins);
         
         System.out.println("✅ WebSocket STOMP configurado");
         System.out.println("   Endpoint: /ws-blueprints");
